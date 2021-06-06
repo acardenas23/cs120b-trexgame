@@ -29,7 +29,7 @@ int main(void){
 	
 	TCCR1A |= 1 << WGM11 | 1 << COM1A1 | 1 << COM1A0; //shift operator to set bits, setting COM1A and COM10 to 1 sets inverting mode (pg176)
 	TCCR1B |= 1 << WGM12 | 1 << WGM13 | 1 << CS10;
-	ICR1 = 19999;
+	ICR1 = 19999;//Default = 1MHz; 1MHz/50Mhz(desired frequency) = 20,000
 
 	ADC_init();
 
@@ -46,12 +46,12 @@ int main(void){
 		if(x <= cactusval){
 			//there is cactus
 			PORTB = 0x01;			
-			OCR1A = ICR1 - 2000;
+			OCR1A = ICR1 - 2000; //2ms period
 			_delay_ms(100); 
 		}else{
 			//there is no cactus
 			PORTB = 0x00;
-			OCR1A = ICR1 - 1550; //position 0
+			OCR1A = ICR1 - 1550; //position 0degrees ~1.5ms period
 			_delay_ms(50);
 		}
 	}
